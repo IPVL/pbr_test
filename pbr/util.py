@@ -88,7 +88,7 @@ def cfg_to_args(path='setup.cfg'):
     if entry_points:
         kwargs['entry_points'] = entry_points
 
-    wrap_commands(kwargs)
+    # wrap_commands(kwargs)
 
     print "pbr.util.cfg_to_args: ", kwargs
     return kwargs
@@ -132,31 +132,22 @@ def get_entry_points(config):
     return dict((option, split_multiline(value)) for option, value in config['entry_points'].items())
 
 
-def wrap_commands(kwargs):
-    dist = Distribution() # This is from setuptools.dist
-    dist.parse_config_files()
-
-    for cmd, _ in dist.get_command_list():
-        # print "cmd ", cmd
-        hooks = {}
-        # for opt, val in dist.get_option_dict(cmd).items():
-        #     print "opt: ", opt
-        #     print "value: ", value
-        #     val = val[1]
-        #     if opt.startswith('pre_hook.') or opt.startswith('post_hook.'):
-        #         hook_type, alias = opt.split('.', 1)
-        #         hook_dict = hooks.setdefault(hook_type, {})
-        #         hook_dict[alias] = val
-        if not hooks:
-            continue
-
-        if 'cmdclass' in kwargs and cmd in kwargs['cmdclass']:
-            cmdclass = kwargs['cmdclass'][cmd]
-        else:
-            cmdclass = dist.get_command_class(cmd)
-
-        new_cmdclass = wrap_command(cmd, cmdclass, hooks)
-        kwargs.setdefault('cmdclass', {})[cmd] = new_cmdclass
+# def wrap_commands(kwargs):
+#     dist = Distribution() # This is from setuptools.dist
+#     dist.parse_config_files()
+#
+#     for cmd, _ in dist.get_command_list():
+#         hooks = {}
+#         if not hooks:
+#             continue
+#
+#         if 'cmdclass' in kwargs and cmd in kwargs['cmdclass']:
+#             cmdclass = kwargs['cmdclass'][cmd]
+#         else:
+#             cmdclass = dist.get_command_class(cmd)
+#
+#         new_cmdclass = wrap_command(cmd, cmdclass, hooks)
+#         kwargs.setdefault('cmdclass', {})[cmd] = new_cmdclass
 
 
 def has_get_option(config, section, option):
