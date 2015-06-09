@@ -38,10 +38,6 @@ MULTI_FIELDS = ("install_requires",
                 "setup_requires",
                 "cmdclass")
 
-# setup() arguments that contain boolean values
-# BOOL_FIELDS = ("use_2to3", "zip_safe", "include_package_data")
-# CSV_FIELDS = ("keywords",)
-
 
 def resolve_name(name):
 
@@ -84,7 +80,6 @@ def cfg_to_args(path='setup.cfg'):
         config[section] = dict(parser.items(section))
 
     pbr.hooks.setup_hook(config)
-
     print "HOOKS PART ARE OVER. "
 
     kwargs = setup_cfg_to_setup_kwargs(config)
@@ -115,15 +110,8 @@ def setup_cfg_to_setup_kwargs(config):
         if not in_cfg_value:
             continue
 
-        # if arg in CSV_FIELDS:
-        #     in_cfg_value = split_csv(in_cfg_value)
         if arg in MULTI_FIELDS:
             in_cfg_value = split_multiline(in_cfg_value)
-        # elif arg in BOOL_FIELDS:
-        #     if in_cfg_value.lower() in ('true', 't', '1', 'yes', 'y'):
-        #         in_cfg_value = True
-        #     else:
-        #         in_cfg_value = False
 
         if in_cfg_value:
             if arg == 'cmdclass':
@@ -149,15 +137,16 @@ def wrap_commands(kwargs):
     dist.parse_config_files()
 
     for cmd, _ in dist.get_command_list():
+        # print "cmd ", cmd
         hooks = {}
-        for opt, val in dist.get_option_dict(cmd).items():
-            print "opt: ", opt
-            print "value: ", value
-            val = val[1]
-            if opt.startswith('pre_hook.') or opt.startswith('post_hook.'):
-                hook_type, alias = opt.split('.', 1)
-                hook_dict = hooks.setdefault(hook_type, {})
-                hook_dict[alias] = val
+        # for opt, val in dist.get_option_dict(cmd).items():
+        #     print "opt: ", opt
+        #     print "value: ", value
+        #     val = val[1]
+        #     if opt.startswith('pre_hook.') or opt.startswith('post_hook.'):
+        #         hook_type, alias = opt.split('.', 1)
+        #         hook_dict = hooks.setdefault(hook_type, {})
+        #         hook_dict[alias] = val
         if not hooks:
             continue
 
