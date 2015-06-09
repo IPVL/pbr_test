@@ -97,15 +97,18 @@ class LocalEggInfo(egg_info.egg_info):
     print "The program has entered into LocalEggInfo: "
     def find_sources(self):
         manifest_filename = os.path.join(self.egg_info, "SOURCES.txt")
-        if (not os.path.exists(manifest_filename) or
-                os.path.exists('.git') or
-                'sdist' in sys.argv):
+        print "manifest_filename: ", manifest_filename
+        if (not os.path.exists(manifest_filename) or 'sdist' in sys.argv):
             mm = LocalManifestMaker(self.distribution)
+            print "mm : ", mm
             mm.manifest = manifest_filename
+            print "mm.manifest: ", mm.manifest
             mm.run()
             self.filelist = mm.filelist
+            print "self.filelist: ", self.filelist 
         else:
             self.filelist = egg_info.FileList()
+            print "self.filelist: ", self.filelist
             for entry in open(manifest_filename, 'r').read().split('\n'):
                 self.filelist.append(entry)
 
