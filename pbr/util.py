@@ -40,28 +40,29 @@ MULTI_FIELDS = ("install_requires",
 
 
 def resolve_name(name):
-
-    print "[resolve_name] name: ", name
     parts = name.split('.')
+    print "parts: ", parts
     cursor = len(parts) - 1
+    print "cursor: ", cursor
     module_name = parts[:cursor]
+    print "module_name: ", module_name
     attr_name = parts[-1]
+    print "attr_name: ", attr_name
 
     while cursor > 0:
         try:
             ret = __import__('.'.join(module_name), fromlist=[attr_name])
+            print "ret: ", ret
             break
         except ImportError:
-            if cursor == 0:
-                raise
-            cursor -= 1
-            module_name = parts[:cursor]
-            attr_name = parts[cursor]
             ret = ''
 
     for part in parts[cursor:]:
         try:
+            print "part: ", part
+            print "ret: ", ret
             ret = getattr(ret, part)
+            print "last ret: ", ret
         except AttributeError:
             raise ImportError(name)
 
@@ -119,8 +120,13 @@ def setup_cfg_to_setup_kwargs(config):
                 dist = Distribution()
                 for cls_name in in_cfg_value:
                     cls = resolve_name(cls_name)
+                    print "cls: ", cls
                     cmd = cls(dist)
+                    print "cmd: ", cmd
                     cmdclass[cmd.get_command_name()] = cls
+                    print "arg: ", arg
+                    print "cmdclass[cmd.get_command_name()]", cmdclass[cmd.get_command_name()]
+                    print "cmdclass: ", cmdclass 
                 in_cfg_value = cmdclass
 
         kwargs[arg] = in_cfg_value
