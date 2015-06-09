@@ -24,47 +24,23 @@ D1_D2_SETUP_ARGS = {
     "name": ("metadata",),
     "version": ("metadata",),
     "author": ("metadata",),
-
     "install_requires": ("metadata", "requires_dist"),
-    #"setup_requires": ("metadata", "setup_requires_dist"),
-    # "provides": ("metadata", "provides_dist"),  # **
-    # "obsoletes": ("metadata", "obsoletes_dist"),  # **
-    # "package_dir": ("files", 'packages_root'),
     "packages": ("files",),
-    # "package_data": ("files",),
-    # "namespace_packages": ("files",),
-    # "data_files": ("files",),
     "scripts": ("files",),
-    # "py_modules": ("files", "modules"),   # **
     "cmdclass": ("global", "commands"),
-
-    # "use_2to3": ("backwards_compat", "use_2to3"),
-    # "zip_safe": ("backwards_compat", "zip_safe"),
-    # "tests_require": ("backwards_compat", "tests_require"),
-    # "dependency_links": ("backwards_compat",),
-    # "include_package_data": ("backwards_compat",),
 }
 
 # setup() arguments that can have multiple values in setup.cfg
-MULTI_FIELDS = (  #"classifiers",
-                # "platforms",
-                "install_requires",
-                #"provides",
-                #"obsoletes",
-                #"namespace_packages",
+MULTI_FIELDS = ("install_requires",
                 "packages",
-                #"package_data",
-                #"data_files",
                 "scripts",
                 "py_modules",
-                #"dependency_links",
                 "setup_requires",
-                #"tests_require",
                 "cmdclass")
 
 # setup() arguments that contain boolean values
-BOOL_FIELDS = ("use_2to3", "zip_safe", "include_package_data")
-CSV_FIELDS = ("keywords",)
+# BOOL_FIELDS = ("use_2to3", "zip_safe", "include_package_data")
+# CSV_FIELDS = ("keywords",)
 
 
 def resolve_name(name):
@@ -139,15 +115,15 @@ def setup_cfg_to_setup_kwargs(config):
         if not in_cfg_value:
             continue
 
-        if arg in CSV_FIELDS:
-            in_cfg_value = split_csv(in_cfg_value)
+        # if arg in CSV_FIELDS:
+        #     in_cfg_value = split_csv(in_cfg_value)
         if arg in MULTI_FIELDS:
             in_cfg_value = split_multiline(in_cfg_value)
-        elif arg in BOOL_FIELDS:
-            if in_cfg_value.lower() in ('true', 't', '1', 'yes', 'y'):
-                in_cfg_value = True
-            else:
-                in_cfg_value = False
+        # elif arg in BOOL_FIELDS:
+        #     if in_cfg_value.lower() in ('true', 't', '1', 'yes', 'y'):
+        #         in_cfg_value = True
+        #     else:
+        #         in_cfg_value = False
 
         if in_cfg_value:
             if arg == 'cmdclass':
