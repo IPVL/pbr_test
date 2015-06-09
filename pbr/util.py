@@ -26,40 +26,40 @@ D1_D2_SETUP_ARGS = {
     "author": ("metadata",),
 
     "install_requires": ("metadata", "requires_dist"),
-    "setup_requires": ("metadata", "setup_requires_dist"),
-    "provides": ("metadata", "provides_dist"),  # **
-    "obsoletes": ("metadata", "obsoletes_dist"),  # **
-    "package_dir": ("files", 'packages_root'),
+    #"setup_requires": ("metadata", "setup_requires_dist"),
+    # "provides": ("metadata", "provides_dist"),  # **
+    # "obsoletes": ("metadata", "obsoletes_dist"),  # **
+    # "package_dir": ("files", 'packages_root'),
     "packages": ("files",),
-    "package_data": ("files",),
-    "namespace_packages": ("files",),
-    "data_files": ("files",),
+    # "package_data": ("files",),
+    # "namespace_packages": ("files",),
+    # "data_files": ("files",),
     "scripts": ("files",),
-    "py_modules": ("files", "modules"),   # **
+    # "py_modules": ("files", "modules"),   # **
     "cmdclass": ("global", "commands"),
 
-    "use_2to3": ("backwards_compat", "use_2to3"),
-    "zip_safe": ("backwards_compat", "zip_safe"),
-    "tests_require": ("backwards_compat", "tests_require"),
-    "dependency_links": ("backwards_compat",),
-    "include_package_data": ("backwards_compat",),
+    # "use_2to3": ("backwards_compat", "use_2to3"),
+    # "zip_safe": ("backwards_compat", "zip_safe"),
+    # "tests_require": ("backwards_compat", "tests_require"),
+    # "dependency_links": ("backwards_compat",),
+    # "include_package_data": ("backwards_compat",),
 }
 
 # setup() arguments that can have multiple values in setup.cfg
-MULTI_FIELDS = ("classifiers",
-                "platforms",
+MULTI_FIELDS = (  #"classifiers",
+                # "platforms",
                 "install_requires",
-                "provides",
-                "obsoletes",
-                "namespace_packages",
+                #"provides",
+                #"obsoletes",
+                #"namespace_packages",
                 "packages",
-                "package_data",
-                "data_files",
+                #"package_data",
+                #"data_files",
                 "scripts",
                 "py_modules",
-                "dependency_links",
+                #"dependency_links",
                 "setup_requires",
-                "tests_require",
+                #"tests_require",
                 "cmdclass")
 
 # setup() arguments that contain boolean values
