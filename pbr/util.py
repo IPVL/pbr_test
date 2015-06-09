@@ -24,17 +24,6 @@ D1_D2_SETUP_ARGS = {
     "name": ("metadata",),
     "version": ("metadata",),
     "author": ("metadata",),
-    "author_email": ("metadata",),
-    "maintainer": ("metadata",),
-    "maintainer_email": ("metadata",),
-    "url": ("metadata", "home_page"),
-    "description": ("metadata", "summary"),
-    "keywords": ("metadata",),
-    "long_description": ("metadata", "description"),
-    "download-url": ("metadata",),
-    "classifiers": ("metadata", "classifier"),
-    "platforms": ("metadata", "platform"),  # **
-    "license": ("metadata",),
 
     "install_requires": ("metadata", "requires_dist"),
     "setup_requires": ("metadata", "setup_requires_dist"),
@@ -123,10 +112,6 @@ def cfg_to_args(path='setup.cfg'):
     print "HOOKS PART ARE OVER. "
 
     kwargs = setup_cfg_to_setup_kwargs(config)
-
-    # Set default config overrides
-    kwargs['include_package_data'] = True
-    kwargs['zip_safe'] = False
     entry_points = get_entry_points(config)
 
     if entry_points:
