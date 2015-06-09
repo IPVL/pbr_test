@@ -39,34 +39,6 @@ class LocalInstallScripts(install_scripts.install_scripts):
         if self.no_ep:
             return
 
-        # ei_cmd = self.get_finalized_command("egg_info")
-        # print "LOCALINSTALLSCRIPTS [ei_cmd]: ", ei_cmd
-        #
-        # print "LOCALINSTALLSCRIPTS [ei_cmd.egg_base]: ", ei_cmd.egg_base
-        # print "LOCALINSTALLSCRIPTS [ei_cmd.egg_info]: ", ei_cmd.egg_info
-        # print "LOCALINSTALLSCRIPTS [pkg_resources.PathMetadata(ei_cmd.egg_base, ei_cmd.egg_info)]: ", pkg_resources.PathMetadata(ei_cmd.egg_base, ei_cmd.egg_info)
-        # print "LOCALINSTALLSCRIPTS [ei_cmd.egg_name]: ", ei_cmd.egg_name
-        # print "LOCALINSTALLSCRIPTS [ei_cmd.egg_version]: ", ei_cmd.egg_version
-        # dist = pkg_resources.Distribution(ei_cmd.egg_base,pkg_resources.PathMetadata(ei_cmd.egg_base, ei_cmd.egg_info),ei_cmd.egg_name, ei_cmd.egg_version,)
-        # print "dist: ", dist
-        # bs_cmd = self.get_finalized_command('build_scripts')
-        # print "LOCALINSTALLSCRIPTS [bs_cmd]: ", bs_cmd
-        #
-        # print "LOCALINSTALLSCRIPTS [easy_install.sys_executable]: ", easy_install.sys_executable
-        # executable = getattr(bs_cmd, 'executable', easy_install.sys_executable)
-        # print "LOCALINSTALLSCRIPTS [executable]: ", executable
-        # is_wininst = getattr(self.get_finalized_command("bdist_wininst"), '_is_running', False)
-        # print "LOCALINSTALLSCRIPTS [is_wininst]: ", is_wininst
-        #
-        #
-        # get_script_args = easy_install.get_script_args
-        # print "LOCALINSTALLSCRIPTS [get_script_args]: ", get_script_args
-        # executable = '"%s"' % executable
-        #
-        # print "LOCALINSTALLSCRIPTS [get_script_args(dist, executable, is_wininst)]: ", get_script_args(dist, executable, is_wininst)
-        # for args in get_script_args(dist, executable, is_wininst):
-        #     self.write_script(*args)
-
 class LocalManifestMaker(egg_info.manifest_maker):
     print "THE PROGRAM HAS ENTERED INTO LOCALMANIFESTMAKER CLASS."
     def add_defaults(self):
