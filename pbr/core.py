@@ -41,8 +41,7 @@ def pbr(dist, attr, value):
         else:
             path = os.path.abspath('setup.cfg')
         if not os.path.exists(path):
-            raise errors.DistutilsFileError(
-                'The setup.cfg file %s does not exist.' % path)
+            raise errors.DistutilsFileError('The setup.cfg file %s does not exist.' % path)
 
         # Converts the setup.cfg file to setup() arguments
         try:
@@ -50,8 +49,7 @@ def pbr(dist, attr, value):
         except Exception:
             e = sys.exc_info()[1]
             logging.exception('Error parsing')
-            raise errors.DistutilsSetupError(
-                'Error parsing %s: %s: %s' % (path, e.__class__.__name__, e))
+            raise errors.DistutilsSetupError('Error parsing %s: %s: %s' % (path, e.__class__.__name__, e))
 
         if attrs:
             for key, val in attrs.items():

@@ -31,19 +31,19 @@ if __name__ == "__main__":
 """
 
 
-def override_get_script_args(dist, executable=os.path.normpath(sys.executable), is_wininst=False):
-    header = easy_install.get_script_header("", executable, is_wininst)
-    for group in 'console_scripts', 'gui_scripts':
-        for name, ep in dist.get_entry_map(group).items():
-            if not ep.attrs or len(ep.attrs) > 2:
-                raise ValueError("Script targets must be of the form 'func' or 'Class.class_method'.")
-            script_text = _script_text % dict(
-                group=group,
-                module_name=ep.module_name,
-                import_target=ep.attrs[0],
-                invoke_target='.'.join(ep.attrs),
-            )
-            yield (name, header + script_text)
+# def override_get_script_args(dist, executable=os.path.normpath(sys.executable), is_wininst=False):
+#     header = easy_install.get_script_header("", executable, is_wininst)
+#     for group in 'console_scripts', 'gui_scripts':
+#         for name, ep in dist.get_entry_map(group).items():
+#             if not ep.attrs or len(ep.attrs) > 2:
+#                 raise ValueError("Script targets must be of the form 'func' or 'Class.class_method'.")
+#             script_text = _script_text % dict(
+#                 group=group,
+#                 module_name=ep.module_name,
+#                 import_target=ep.attrs[0],
+#                 invoke_target='.'.join(ep.attrs),
+#             )
+#             yield (name, header + script_text)
 
 
 class LocalInstallScripts(install_scripts.install_scripts):
@@ -113,7 +113,6 @@ class LocalEggInfo(egg_info.egg_info):
 
 class LocalSDist(sdist.sdist):
     command_name = 'sdist'
-    print "The program has entered into LocalSDIST"
     def run(self):
         print "This is the LocalSDist Run Method`"
         sdist.sdist.run(self)
