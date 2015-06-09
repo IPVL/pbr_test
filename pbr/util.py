@@ -132,24 +132,6 @@ def get_entry_points(config):
     return dict((option, split_multiline(value)) for option, value in config['entry_points'].items())
 
 
-# def wrap_commands(kwargs):
-#     dist = Distribution() # This is from setuptools.dist
-#     dist.parse_config_files()
-#
-#     for cmd, _ in dist.get_command_list():
-#         hooks = {}
-#         if not hooks:
-#             continue
-#
-#         if 'cmdclass' in kwargs and cmd in kwargs['cmdclass']:
-#             cmdclass = kwargs['cmdclass'][cmd]
-#         else:
-#             cmdclass = dist.get_command_class(cmd)
-#
-#         new_cmdclass = wrap_command(cmd, cmdclass, hooks)
-#         kwargs.setdefault('cmdclass', {})[cmd] = new_cmdclass
-
-
 def has_get_option(config, section, option):
     if section in config and option in config[section]:
         return config[section][option]
