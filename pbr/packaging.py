@@ -111,13 +111,11 @@ class LocalEggInfo(egg_info.egg_info):
         if (not os.path.exists(manifest_filename) or
                 os.path.exists('.git') or
                 'sdist' in sys.argv):
-            log.info("[pbr] Processing SOURCES.txt")
             mm = LocalManifestMaker(self.distribution)
             mm.manifest = manifest_filename
             mm.run()
             self.filelist = mm.filelist
         else:
-            log.info("[pbr] Reusing existing SOURCES.txt")
             self.filelist = egg_info.FileList()
             for entry in open(manifest_filename, 'r').read().split('\n'):
                 self.filelist.append(entry)

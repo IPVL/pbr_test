@@ -4,6 +4,7 @@ import os
 import re
 import sys
 import traceback
+import ConfigParser as configparser
 
 from collections import defaultdict
 
@@ -11,14 +12,7 @@ from distutils import log
 from distutils.errors import (DistutilsOptionError, DistutilsModuleError,DistutilsFileError)
 from setuptools.dist import Distribution
 
-try:
-    import ConfigParser as configparser
-except ImportError:
-    import configparser
-
 import pbr.hooks
-
-_VERSION_SPEC_RE = re.compile(r'\s*(.*?)\s*\((.*)\)\s*$')
 
 D1_D2_SETUP_ARGS = {
     "name": ("metadata",),
@@ -41,28 +35,20 @@ MULTI_FIELDS = ("install_requires",
 
 def resolve_name(name):
     parts = name.split('.')
-    print "parts: ", parts
     cursor = len(parts) - 1
-    print "cursor: ", cursor
     module_name = parts[:cursor]
-    print "module_name: ", module_name
     attr_name = parts[-1]
-    print "attr_name: ", attr_name
 
     while cursor > 0:
         try:
             ret = __import__('.'.join(module_name), fromlist=[attr_name])
-            print "ret: ", ret
             break
         except ImportError:
             ret = ''
 
     for part in parts[cursor:]:
         try:
-            print "part: ", part
-            print "ret: ", ret
             ret = getattr(ret, part)
-            print "last ret: ", ret
         except AttributeError:
             raise ImportError(name)
 
@@ -81,17 +67,12 @@ def cfg_to_args(path='setup.cfg'):
         config[section] = dict(parser.items(section))
 
     pbr.hooks.setup_hook(config)
-    print "HOOKS PART ARE OVER. "
-
     kwargs = setup_cfg_to_setup_kwargs(config)
     entry_points = get_entry_points(config)
 
     if entry_points:
         kwargs['entry_points'] = entry_points
 
-    # wrap_commands(kwargs)
-
-    print "pbr.util.cfg_to_args: ", kwargs
     return kwargs
 
 
@@ -120,13 +101,8 @@ def setup_cfg_to_setup_kwargs(config):
                 dist = Distribution()
                 for cls_name in in_cfg_value:
                     cls = resolve_name(cls_name)
-                    print "cls: ", cls
                     cmd = cls(dist)
-                    print "cmd: ", cmd
                     cmdclass[cmd.get_command_name()] = cls
-                    print "arg: ", arg
-                    print "cmdclass[cmd.get_command_name()]", cmdclass[cmd.get_command_name()]
-                    print "cmdclass: ", cmdclass 
                 in_cfg_value = cmdclass
 
         kwargs[arg] = in_cfg_value
@@ -134,7 +110,6 @@ def setup_cfg_to_setup_kwargs(config):
     return kwargs
 
 def get_entry_points(config):
-    if not 'entry_points' in config: return {}
     return dict((option, split_multiline(value)) for option, value in config['entry_points'].items())
 
 
@@ -148,15 +123,7 @@ def has_get_option(config, section, option):
 
 
 def split_multiline(value):
-    print "[pbr.util.split_multiline -> First] value: ", value
     value = [element for element in (line.strip() for line in value.split('\n')) if element]
-    print "[pbr.util.split_multiline -> Second] value: ", value
-    return value
-
-
-def split_csv(value):
-    value = [element for element in (chunk.strip() for chunk in value.split(',')) if element]
-    print "split_csv value: ", value
     return value
 
 
@@ -171,9 +138,7 @@ class DefaultGetDict(defaultdict):
 class IgnoreDict(dict):
 
     def __init__(self, ignore):
-        self.__ignore = re.compile(r'(%s)' % ('|'.join(
-                                   [pat.replace('*', '.*')
-                                    for pat in ignore])))
+        self.__ignore = re.compile(r'(%s)' % ('|'.join([pat.replace('*', '.*')for pat in ignore])))
 
     def __setitem__(self, key, val):
         if self.__ignore.match(key):
