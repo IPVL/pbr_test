@@ -25,28 +25,47 @@ class LocalInstallScripts(install_scripts.install_scripts):
         import distutils.command.install_scripts
 
         self.run_command("egg_info")
+        print "LOCALINSTALLSCRIPTS [self.run_command]: ", self.run_command
+
+        print "LOCALINSTALLSCRIPTS [self.distribution.scripts]: ", self.distribution.scripts
         if self.distribution.scripts:
             distutils.command.install_scripts.install_scripts.run(self)
+            print "LOCALINSTALLSCRIPTS [distutils.command.install_scripts.install_scripts.run(self)]: ", distutils.command.install_scripts.install_scripts.run(self)
         else:
             self.outfiles = []
+            print "LOCALINSTALLSCRIPTS [self.outfiles]: ", self.outfiles
+
+        print "LOCALINSTALLSCRIPTS [self.no_ep]: ", self.no_ep
         if self.no_ep:
             return
 
-        ei_cmd = self.get_finalized_command("egg_info")
-        dist = pkg_resources.Distribution(ei_cmd.egg_base,pkg_resources.PathMetadata(ei_cmd.egg_base, ei_cmd.egg_info),ei_cmd.egg_name, ei_cmd.egg_version,)
-        print "dist: ", dist
-        bs_cmd = self.get_finalized_command('build_scripts')
-        executable = getattr(bs_cmd, 'executable', easy_install.sys_executable)
-        is_wininst = getattr(self.get_finalized_command("bdist_wininst"), '_is_running', False)
-
-        if os.name != 'nt':
-            get_script_args = override_get_script_args
-        else:
-            get_script_args = easy_install.get_script_args
-            executable = '"%s"' % executable
-
-        for args in get_script_args(dist, executable, is_wininst):
-            self.write_script(*args)
+        # ei_cmd = self.get_finalized_command("egg_info")
+        # print "LOCALINSTALLSCRIPTS [ei_cmd]: ", ei_cmd
+        #
+        # print "LOCALINSTALLSCRIPTS [ei_cmd.egg_base]: ", ei_cmd.egg_base
+        # print "LOCALINSTALLSCRIPTS [ei_cmd.egg_info]: ", ei_cmd.egg_info
+        # print "LOCALINSTALLSCRIPTS [pkg_resources.PathMetadata(ei_cmd.egg_base, ei_cmd.egg_info)]: ", pkg_resources.PathMetadata(ei_cmd.egg_base, ei_cmd.egg_info)
+        # print "LOCALINSTALLSCRIPTS [ei_cmd.egg_name]: ", ei_cmd.egg_name
+        # print "LOCALINSTALLSCRIPTS [ei_cmd.egg_version]: ", ei_cmd.egg_version
+        # dist = pkg_resources.Distribution(ei_cmd.egg_base,pkg_resources.PathMetadata(ei_cmd.egg_base, ei_cmd.egg_info),ei_cmd.egg_name, ei_cmd.egg_version,)
+        # print "dist: ", dist
+        # bs_cmd = self.get_finalized_command('build_scripts')
+        # print "LOCALINSTALLSCRIPTS [bs_cmd]: ", bs_cmd
+        #
+        # print "LOCALINSTALLSCRIPTS [easy_install.sys_executable]: ", easy_install.sys_executable
+        # executable = getattr(bs_cmd, 'executable', easy_install.sys_executable)
+        # print "LOCALINSTALLSCRIPTS [executable]: ", executable
+        # is_wininst = getattr(self.get_finalized_command("bdist_wininst"), '_is_running', False)
+        # print "LOCALINSTALLSCRIPTS [is_wininst]: ", is_wininst
+        #
+        #
+        # get_script_args = easy_install.get_script_args
+        # print "LOCALINSTALLSCRIPTS [get_script_args]: ", get_script_args
+        # executable = '"%s"' % executable
+        #
+        # print "LOCALINSTALLSCRIPTS [get_script_args(dist, executable, is_wininst)]: ", get_script_args(dist, executable, is_wininst)
+        # for args in get_script_args(dist, executable, is_wininst):
+        #     self.write_script(*args)
 
 class LocalManifestMaker(egg_info.manifest_maker):
     print "THE PROGRAM HAS ENTERED INTO LOCALMANIFESTMAKER CLASS."
@@ -59,7 +78,7 @@ class LocalManifestMaker(egg_info.manifest_maker):
         self.filelist.include_pattern("*", prefix=ei_cmd.egg_info)
 
 
-class LocalEggInfo(egg_info.egg_info): # It is needed in the sdist command, not in install. 
+class LocalEggInfo(egg_info.egg_info): # It is needed in the sdist command, not in install.
     command_name = 'egg_info'
     print "PROGRAM HAS ENTERED INTO LOCALEGGINFO CLASS. : "
     def find_sources(self):
