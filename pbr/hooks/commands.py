@@ -23,5 +23,4 @@ class CommandsConfig(base.BaseConfig):
         self.add_command('pbr.packaging.LocalEggInfo')
         self.add_command('pbr.packaging.LocalSDist')
         self.add_command('pbr.packaging.LocalInstallScripts')
-        self.add_command('pbr.packaging.LocalDevelop')
 

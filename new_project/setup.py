@@ -1,5 +1,5 @@
 from setuptools import setup
 setup(
 	setup_requires=['pbr'],
-	pbr=False,  
+	pbr=True,
 )

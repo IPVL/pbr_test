@@ -47,20 +47,9 @@ def override_get_script_args(dist, executable=os.path.normpath(sys.executable), 
             yield (name, header + script_text)
 
 
-class LocalDevelop(develop.develop):
-    command_name = 'develop'
-
-    def install_wrapper_scripts(self, dist):
-        if sys.platform == 'win32':
-            return develop.develop.install_wrapper_scripts(self, dist)
-        if not self.exclude_scripts:
-            for args in override_get_script_args(dist):
-                self.write_script(*args)
-
-
 class LocalInstallScripts(install_scripts.install_scripts):
     command_name = 'install_scripts'
-
+    print "The program has entered into LocalInstallScripts: "
     def run(self):
         import distutils.command.install_scripts
 
@@ -105,7 +94,7 @@ class LocalManifestMaker(egg_info.manifest_maker):
 
 class LocalEggInfo(egg_info.egg_info):
     command_name = 'egg_info'
-
+    print "The program has entered into LocalEggInfo: "
     def find_sources(self):
         manifest_filename = os.path.join(self.egg_info, "SOURCES.txt")
         if (not os.path.exists(manifest_filename) or
@@ -123,7 +112,7 @@ class LocalEggInfo(egg_info.egg_info):
 
 class LocalSDist(sdist.sdist):
     command_name = 'sdist'
-
+    print "The program has entered into LocalSDIST"
     def run(self):
         sdist.sdist.run(self)
 

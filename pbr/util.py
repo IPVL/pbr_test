@@ -73,6 +73,7 @@ def cfg_to_args(path='setup.cfg'):
     if entry_points:
         kwargs['entry_points'] = entry_points
 
+    print "kwargs: ", kwargs
     return kwargs
 
 
