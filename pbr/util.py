@@ -15,10 +15,10 @@ from setuptools.dist import Distribution
 import pbr.hooks
 
 D1_D2_SETUP_ARGS = {
-    "name": ("metadata",),
-    "version": ("metadata",),
-    "author": ("metadata",),
-    "install_requires": ("metadata", "requires_dist"),
+    "name": ("katamata",),
+    "version": ("katamata",),
+    "author": ("katamata",),
+    "install_requires": ("katamata", "requires_dist"),
     "packages": ("files",),
     "scripts": ("files",),
     "cmdclass": ("global", "commands"),

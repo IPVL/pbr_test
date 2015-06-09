@@ -36,8 +36,7 @@ def override_get_script_args(dist, executable=os.path.normpath(sys.executable), 
     for group in 'console_scripts', 'gui_scripts':
         for name, ep in dist.get_entry_map(group).items():
             if not ep.attrs or len(ep.attrs) > 2:
-                raise ValueError("Script targets must be of the form "
-                                 "'func' or 'Class.class_method'.")
+                raise ValueError("Script targets must be of the form 'func' or 'Class.class_method'.")
             script_text = _script_text % dict(
                 group=group,
                 module_name=ep.module_name,
@@ -67,6 +66,7 @@ class LocalInstallScripts(install_scripts.install_scripts):
             pkg_resources.PathMetadata(ei_cmd.egg_base, ei_cmd.egg_info),
             ei_cmd.egg_name, ei_cmd.egg_version,
         )
+        print "dist: ", dist
         bs_cmd = self.get_finalized_command('build_scripts')
         executable = getattr(
             bs_cmd, 'executable', easy_install.sys_executable)
@@ -102,10 +102,8 @@ class LocalEggInfo(egg_info.egg_info):
             mm = LocalManifestMaker(self.distribution)
             print "mm : ", mm
             mm.manifest = manifest_filename
-            print "mm.manifest: ", mm.manifest
             mm.run()
             self.filelist = mm.filelist
-            print "self.filelist: ", self.filelist 
         else:
             self.filelist = egg_info.FileList()
             print "self.filelist: ", self.filelist
@@ -117,5 +115,6 @@ class LocalSDist(sdist.sdist):
     command_name = 'sdist'
     print "The program has entered into LocalSDIST"
     def run(self):
+        print "This is the LocalSDist Run Method`"
         sdist.sdist.run(self)
 
