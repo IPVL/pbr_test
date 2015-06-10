@@ -89,7 +89,7 @@ def pbr(dist, attr, value):
 
         # if isinstance(dist.metadata.version, integer_types + (float,)):
         #     dist.metadata.version = str(dist.metadata.version)
-        # 
+        #
         # ignore = ['pre_hook.*', 'post_hook.*']
         # dist.command_options = util.DefaultGetDict(lambda: util.IgnoreDict(ignore))
     finally:
