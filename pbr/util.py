@@ -127,21 +127,3 @@ def split_multiline(value):
     value = [element for element in (line.strip() for line in value.split('\n')) if element]
     return value
 
-
-class DefaultGetDict(defaultdict):
-
-    def get(self, key, default=None):
-        if default is None:
-            default = self.default_factory()
-        return super(DefaultGetDict, self).setdefault(key, default)
-
-
-class IgnoreDict(dict):
-
-    def __init__(self, ignore):
-        self.__ignore = re.compile(r'(%s)' % ('|'.join([pat.replace('*', '.*')for pat in ignore])))
-
-    def __setitem__(self, key, val):
-        if self.__ignore.match(key):
-            return
-        super(IgnoreDict, self).__setitem__(key, val)

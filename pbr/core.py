@@ -87,10 +87,5 @@ def pbr(dist, attr, value):
         core.Distribution.finalize_options(dist)
         print "CORE [core.Distribution.finalize_options(dist)]: ",core.Distribution.finalize_options(dist)
 
-        # if isinstance(dist.metadata.version, integer_types + (float,)):
-        #     dist.metadata.version = str(dist.metadata.version)
-        #
-        # ignore = ['pre_hook.*', 'post_hook.*']
-        # dist.command_options = util.DefaultGetDict(lambda: util.IgnoreDict(ignore))
     finally:
         _restore_distribution_monkeypatch()
